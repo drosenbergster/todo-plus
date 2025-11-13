@@ -1,0 +1,459 @@
+:root {
+  --bg: #f5f2eb;
+  --bg-accent: #eef3f5;
+  --primary: #5a7a6b;
+  --primary-600: #4a6a5b;
+  --accent: #7ba5b3;
+  --accent-soft: #9db3a8;
+  --ink: #3a4a43;
+  --muted: #6b7a83;
+  --card: #faf8f3;
+  --card-warm: #f8f5f0;
+  --card-blue-tint: #f5f7f9;
+  --border: #c4d1d8;
+  --border-soft: #d8e2e7;
+  --border-blue: #b8c9d3;
+  --success: #5a7a6b;
+  --cream: #faf8f3;
+  --sage: #d4d8c5;
+  --sand: #e8e1d5;
+  --blue-light: #e0eef5;
+  --blue-soft: #d4e5eb;
+}
+
+* { 
+  box-sizing: border-box;
+  font-family: Calibri, "Calibri Light", "Gill Sans", "Gill Sans MT", sans-serif;
+  font-size: 10pt;
+}
+html, body { 
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: Calibri, "Calibri Light", "Gill Sans", "Gill Sans MT", sans-serif;
+  font-size: 10pt;
+  color: var(--ink);
+  background: linear-gradient(135deg, #f5f2eb 0%, #f0f2f5 25%, #f5f7f9 50%, #f0ede7 75%, #edeef3 100%);
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(212, 229, 235, 0.25) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(232, 225, 213, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(154, 179, 168, 0.1) 0%, transparent 60%);
+  background-attachment: fixed;
+}
+
+* {
+  font-family: Calibri, "Calibri Light", "Gill Sans", "Gill Sans MT", sans-serif;
+  font-size: 10pt;
+}
+
+.app-header {
+  flex-shrink: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  background: rgba(250, 248, 243, 0.9);
+  backdrop-filter: saturate(140%) blur(8px);
+  border-bottom: 1.5px solid var(--border-blue);
+  position: relative;
+  box-shadow: 0 1px 3px rgba(123, 165, 179, 0.1);
+}
+.brand { display: flex; align-items: center; gap: .5rem; }
+.logo { font-size: 1.6rem; }
+.title { 
+  font-family: Calibri, "Calibri Light", "Gill Sans", "Gill Sans MT", sans-serif;
+  font-size: 10pt; 
+  margin: 0; 
+  letter-spacing: .5px; 
+}
+
+.header-actions { display: flex; align-items: center; gap: .5rem; }
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0.4rem 0.6rem;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.split {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 0.4rem;
+  height: 100%;
+  min-height: 0;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  padding: 0.2rem 0.2rem 0.2rem 0.4rem;
+}
+
+.panel-title { 
+  margin: 0; 
+  font-weight: 700; 
+}
+
+.panel .boards {
+  display: grid;
+  grid-template-columns: repeat(var(--section-count, 1), 1fr);
+  gap: 0.5rem;
+  overflow: hidden;
+  height: 100%;
+  min-height: 0;
+}
+
+.board {
+  background: var(--board-bg, rgba(250, 248, 243, 0.95));
+  border: 1.5px solid var(--board-border, var(--border-blue));
+  border-radius: 12px;
+  padding: .5rem;
+  box-shadow: 0 2px 8px rgba(123, 165, 179, 0.12), 0 1px 3px rgba(58, 74, 67, 0.08);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  cursor: move;
+  transition: all 0.2s ease;
+}
+.board.dragging {
+  opacity: 0.5;
+  transform: scale(0.98);
+  box-shadow: 0 4px 12px rgba(123, 165, 179, 0.2);
+}
+.boards.drag-over .board:not(.dragging) {
+  opacity: 0.7;
+}
+.board.drag-over-target {
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(123, 165, 179, 0.25);
+}
+.board-header { 
+  flex-shrink: 0;
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  gap: .4rem; 
+  margin-bottom: .35rem;
+  cursor: move;
+}
+.board-drag-handle {
+  cursor: grab;
+  color: var(--muted);
+  font-size: 10pt;
+  line-height: 1;
+  user-select: none;
+  padding: 0.2rem 0.1rem;
+  transition: color 0.15s ease;
+}
+.board-drag-handle:active {
+  cursor: grabbing;
+}
+.board:hover .board-drag-handle {
+  color: var(--accent);
+}
+.board-title { 
+  margin: 0; 
+  font-family: Calibri, "Calibri Light", "Gill Sans", "Gill Sans MT", sans-serif;
+  font-size: 10pt; 
+  font-weight: 600;
+  flex: 1;
+}
+.board-tools { display: flex; gap: .2rem; }
+
+.add-todo { 
+  flex-shrink: 0;
+  display: flex; 
+  gap: .4rem; 
+  margin: 0 0 .4rem 0; 
+}
+.todo-input {
+  flex: 1;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  padding: .5rem .6rem;
+  font-family: Calibri, "Calibri Light", "Gill Sans", "Gill Sans MT", sans-serif;
+  font-size: 10pt;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--ink);
+}
+.todo-input:focus { 
+  outline: 2px solid var(--accent); 
+  outline-offset: 2px;
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 1);
+}
+
+.todo-list { 
+  list-style: none; 
+  padding: 0; 
+  margin: 0; 
+  display: flex; 
+  flex-direction: column; 
+  gap: .2rem; 
+  flex: 1; 
+  overflow: hidden;
+  min-height: 0;
+  align-content: flex-start;
+}
+.todo-item {
+  flex-shrink: 1;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: .3rem;
+  padding: .3rem .4rem;
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
+  background: rgba(248, 250, 252, 0.9);
+  cursor: move;
+  transition: all 0.15s ease;
+  min-height: 0;
+}
+.todo-item:hover { 
+  border-color: var(--accent); 
+  box-shadow: 0 2px 4px rgba(123, 165, 179, 0.15);
+  background: rgba(240, 246, 250, 0.95);
+}
+.todo-item.dragging { opacity: 0.5; transform: scale(0.98); }
+.todo-list.drag-over { 
+  background: var(--blue-light); 
+  border-radius: 8px;
+  border: 1px dashed var(--accent);
+}
+.todo { display: inline-flex; align-items: center; gap: .45rem; flex: 1; }
+.todo-check { width: 16px; height: 16px; accent-color: var(--primary); flex-shrink: 0; cursor: pointer; }
+.todo-text { 
+  outline: none; 
+  min-width: 40px; 
+  flex: 1; 
+  font-family: Calibri, "Calibri Light", "Gill Sans", "Gill Sans MT", sans-serif;
+  font-size: 10pt; 
+  line-height: 1.3; 
+}
+.todo-item.completed .todo-text { text-decoration: line-through; color: var(--muted); }
+.todo-item.completed { 
+  opacity: .75; 
+  background: rgba(232, 238, 242, 0.6);
+  border-color: var(--border-soft);
+}
+
+.todo-actions { display: flex; gap: .2rem; align-items: center; flex-shrink: 0; }
+.move-todo-select {
+  padding: 0;
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
+  background: rgba(232, 238, 242, 0.7);
+  font-size: 0;
+  color: transparent;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237ba5b3' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+}
+.move-todo-select:hover { 
+  background-color: var(--blue-light); 
+  border-color: var(--accent);
+  box-shadow: 0 1px 2px rgba(123, 165, 179, 0.2);
+}
+.move-todo-select:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+.move-todo-select option {
+  font-family: Calibri, "Calibri Light", "Gill Sans", "Gill Sans MT", sans-serif;
+  font-size: 10pt;
+  color: var(--ink);
+  padding: 0.25rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  padding: .35rem .55rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-soft);
+  background: rgba(248, 245, 240, 0.9);
+  color: var(--ink);
+  font-family: Calibri, "Calibri Light", "Gill Sans", "Gill Sans MT", sans-serif;
+  font-weight: 500;
+  font-size: 10pt;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn.primary { 
+  background: var(--primary); 
+  color: #fff; 
+  border-color: var(--primary);
+  box-shadow: 0 1px 3px rgba(90, 122, 107, 0.2);
+}
+.btn.primary:hover { 
+  background: var(--primary-600); 
+  border-color: var(--primary-600);
+  box-shadow: 0 2px 5px rgba(90, 122, 107, 0.3);
+}
+.btn.subtle { 
+  background: rgba(232, 238, 242, 0.7);
+  border-color: var(--border-soft);
+}
+.btn.subtle:hover {
+  background: var(--blue-light);
+  border-color: var(--accent-soft);
+}
+.btn:disabled { opacity: .6; cursor: not-allowed; }
+
+.app-footer { 
+  flex-shrink: 0;
+  text-align: center; 
+  color: var(--muted); 
+  padding: 0.5rem 1rem;
+  background: rgba(250, 248, 243, 0.9);
+  backdrop-filter: saturate(140%) blur(4px);
+  border-top: 1.5px solid var(--border-blue);
+  box-shadow: 0 -1px 3px rgba(123, 165, 179, 0.1);
+}
+.app-footer p {
+  margin: 0;
+  font-family: Calibri, "Calibri Light", "Gill Sans", "Gill Sans MT", sans-serif;
+  font-size: 10pt;
+}
+
+/* Calendar Widget */
+.calendar-widget {
+  position: fixed;
+  bottom: 60px;
+  right: 12px;
+  width: 200px;
+  background: rgba(250, 248, 243, 0.95);
+  border: 1.5px solid var(--border-blue);
+  border-radius: 8px;
+  padding: 0.4rem;
+  box-shadow: 0 2px 8px rgba(123, 165, 179, 0.15);
+  z-index: 100;
+  backdrop-filter: saturate(140%) blur(4px);
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.3rem;
+  padding: 0.2rem 0;
+}
+
+.calendar-month-year {
+  font-family: Calibri, "Calibri Light", "Gill Sans", "Gill Sans MT", sans-serif;
+  font-size: 10pt;
+  font-weight: 600;
+  color: var(--ink);
+  flex: 1;
+  text-align: center;
+}
+
+.calendar-nav-btn {
+  background: rgba(232, 238, 242, 0.7);
+  border: 1px solid var(--border-soft);
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  font-family: Calibri, "Calibri Light", "Gill Sans", "Gill Sans MT", sans-serif;
+  font-size: 12pt;
+  line-height: 1;
+  color: var(--ink);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.15s ease;
+}
+
+.calendar-nav-btn:hover {
+  background: var(--blue-light);
+  border-color: var(--accent);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  font-family: Calibri, "Calibri Light", "Gill Sans", "Gill Sans MT", sans-serif;
+  font-size: 9pt;
+}
+
+.calendar-day-header {
+  text-align: center;
+  font-weight: 600;
+  color: var(--muted);
+  padding: 0.2rem 0;
+  font-size: 8pt;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  font-size: 9pt;
+  cursor: default;
+  position: relative;
+}
+
+.calendar-day.other-month {
+  color: var(--border);
+  opacity: 0.4;
+}
+
+.calendar-day.today {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.calendar-day.has-date {
+  background: rgba(123, 165, 179, 0.2);
+  border: 1px solid var(--accent);
+  font-weight: 600;
+}
+
+.calendar-day.has-date.today {
+  background: rgba(90, 122, 107, 0.3);
+  border: 1.5px solid var(--primary);
+  color: var(--primary);
+}
+
+/* Remove the wave decoration to maximize space */
+
+@media (max-width: 800px) {
+  .boards { grid-template-columns: 1fr; }
+  .calendar-widget {
+    bottom: 50px;
+    right: 8px;
+    width: 180px;
+  }
+}
+
+

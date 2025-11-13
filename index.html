@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Otter To‑Do</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">🦦</span>
+        <h1 class="title">Otter To‑Do</h1>
+      </div>
+      <div class="header-actions"></div>
+    </header>
+
+    <main class="app-main">
+      <div class="split">
+        <section class="panel" id="panelTop">
+          <div class="panel-header">
+            <h2 class="panel-title"><strong>INNSPACE</strong></h2>
+            <button id="addSectionTopBtn" class="btn primary">+ Section</button>
+          </div>
+          <section class="boards" id="boardsTop" aria-live="polite"></section>
+        </section>
+        <section class="panel" id="panelBottom">
+          <div class="panel-header">
+            <h2 class="panel-title"><strong>LIFE</strong></h2>
+            <button id="addSectionBottomBtn" class="btn primary">+ Section</button>
+          </div>
+          <section class="boards" id="boardsBottom" aria-live="polite"></section>
+        </section>
+      </div>
+    </main>
+
+    <template id="sectionTemplate">
+      <div class="board" data-section-id="" draggable="true">
+        <div class="board-header" draggable="true">
+          <div class="board-drag-handle" title="Drag to reorder" draggable="true">⋮⋮</div>
+          <h2 class="board-title"></h2>
+          <div class="board-tools">
+            <button class="rename-section btn subtle" title="Rename section">Rename</button>
+            <button class="delete-section btn subtle" title="Delete section">Delete</button>
+          </div>
+        </div>
+        <form class="add-todo" autocomplete="off">
+          <input class="todo-input" type="text" name="todo" placeholder="Add a task…" aria-label="Add a task">
+          <button class="btn primary" type="submit">Add</button>
+        </form>
+        <ul class="todo-list" role="list" data-drop-zone="true"></ul>
+      </div>
+    </template>
+
+    <template id="todoItemTemplate">
+      <li class="todo-item" data-todo-id="" draggable="true">
+        <label class="todo">
+          <input class="todo-check" type="checkbox" aria-label="Toggle complete">
+          <span class="todo-text" contenteditable="false"></span>
+        </label>
+        <div class="todo-actions">
+          <select class="move-todo-select" title="Move to section">
+            <option value=""></option>
+          </select>
+          <button class="edit-todo btn subtle" title="Edit">Edit</button>
+          <button class="delete-todo btn subtle" title="Delete">Delete</button>
+        </div>
+      </li>
+    </template>
+
+    <footer class="app-footer">
+      <p id="footerMessage">Have an otterly productive day!</p>
+    </footer>
+
+    <div class="calendar-widget" id="calendarWidget">
+      <div class="calendar-header">
+        <button class="calendar-nav-btn" id="prevMonth" title="Previous month">‹</button>
+        <span class="calendar-month-year" id="calendarMonthYear"></span>
+        <button class="calendar-nav-btn" id="nextMonth" title="Next month">›</button>
+      </div>
+      <div class="calendar-grid" id="calendarGrid"></div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+  </html>
+
+
